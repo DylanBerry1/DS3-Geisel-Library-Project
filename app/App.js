@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { ref, push, set, onValue } from "firebase/database"
-import { db } from "./firebase"
+import { db } from "../app/firebase"
 import "./App.css"
 
 export default function App() {
