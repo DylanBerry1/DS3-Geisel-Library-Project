@@ -11,7 +11,9 @@ import {
   Legend,
 } from "recharts";
 
-// 🔹 Temporary fake data per floor (we'll replace with Firebase data later)
+import Visualization from "./Visualization.jsx"; // visualization component
+
+// 🔹 Temporary fake data per floor (only used in About if needed later)
 const floorData = [
   { floor: "1", devices: 8 },
   { floor: "2", devices: 12 },
@@ -25,7 +27,7 @@ const floorData = [
 // Total across all floors
 const totalDevices = floorData.reduce((sum, row) => sum + row.devices, 0);
 
-// Data for the bar chart: all floors + total
+// Data for demo chart — not used anymore
 const vizData = [
   ...floorData,
   { floor: "Total", devices: totalDevices },
@@ -57,17 +59,15 @@ function App() {
             ESP32 boards, programmed using the Arduino IDE, periodically scan
             for nearby Wi-Fi devices. Each board records:
           </p>
+          <ul>
+            <li>How many devices were detected</li>
+            <li>Which floor the ESP32 is on</li>
+            <li>The time of the scan</li>
+          </ul>
           <p>
-            <ul>
-              <li>How many devices were detected</li>
-              <li>Which floor the ESP32 is on</li>
-              <li>The time of the scan</li>
-            </ul>
-          </p>
-          <p>
-            These readings are sent to an online database (Firebase) and are
-            visualized on this site. What you see now uses example data; later,
-            it will be driven by real readings from the deployed sensors.
+            These readings are sent to Firebase and visualized on the website.
+            Live visualizations now appear on the{" "}
+            <strong>Visualization</strong> page.
           </p>
         </section>
       );
@@ -78,66 +78,14 @@ function App() {
         <section className="section">
           <h1>Visualization</h1>
           <p>
-            Bar chart of <strong>number of devices per floor</strong> in Geisel.
-            The last bar shows the <strong>total</strong> across all floors.
-            This currently uses placeholder data but is wired for live data
-            later.
+            This visualization displays live data according to the Geisel
+            Library floor layout. As data comes in, floor occupancy fills from
+            the center, reflecting actual usage.
           </p>
 
+          {/* Only visualization component shown here */}
           <div className="chart-container">
-            <ResponsiveContainer width="100%" height={320}>
-              <BarChart
-                data={vizData}
-                margin={{ top: 20, right: 30, left: 0, bottom: 10 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis
-                  dataKey="floor"
-                  label={{
-                    value: "Floor",
-                    position: "insideBottomRight",
-                    offset: -5,
-                    fill: "#E5E7EB",
-                  }}
-                  tick={{ fill: "#E5E7EB" }}
-                />
-                <YAxis
-                  label={{
-                    value: "Devices",
-                    angle: -90,
-                    position: "insideLeft",
-                    fill: "#E5E7EB",
-                  }}
-                  tick={{ fill: "#E5E7EB" }}
-                />
-                <Tooltip
-                  contentStyle={{
-                    background: "#020617",
-                    border: "1px solid rgba(148,163,184,0.6)",
-                    borderRadius: "0.5rem",
-                    color: "#E5E7EB",
-                  }}
-                />
-                <Legend
-                  wrapperStyle={{ color: "#E5E7EB", fontSize: "0.8rem" }}
-                />
-
-                {/* 🔵 New blue→blue gradient */}
-                <defs>
-                  <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#60a5fa" /> {/* light blue */}
-                    <stop offset="100%" stopColor="#2563eb" /> {/* deep blue */}
-                  </linearGradient>
-                </defs>
-
-                <Bar
-                  dataKey="devices"
-                  name="Devices"
-                  fill="url(#barGradient)"
-                  radius={[6, 6, 0, 0]}
-                />
-              </BarChart>
-            </ResponsiveContainer>
+            <Visualization />
           </div>
         </section>
       );
@@ -149,16 +97,14 @@ function App() {
           <h1>Data Input (Demo)</h1>
           <p>
             In the final version of this project, readings will be sent
-            automatically by ESP32 boards. This page is for testing what manual
-            input to the database would look like.
+            automatically by ESP32 boards. This page demonstrates what manual
+            input to Firebase might look like.
           </p>
           <form
             className="input-form"
             onSubmit={(e) => {
               e.preventDefault();
-              alert(
-                "Demo only: in the real system this will send data to Firebase."
-              );
+              alert("Demo only: real input will use Firebase.");
             }}
           >
             <label>
@@ -180,7 +126,7 @@ function App() {
               <input type="number" min="0" name="devices" required />
             </label>
 
-            <button type="submit">Submit (demo)</button>
+            <button type="submit">Submit (Demo)</button>
           </form>
         </section>
       );
