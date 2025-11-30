@@ -13,7 +13,6 @@ import {
 
 import Visualization from "./Visualization.jsx"; // visualization component
 
-// 🔹 Temporary fake data per floor (only used in About if needed later)
 const floorData = [
   { floor: "1", devices: 8 },
   { floor: "2", devices: 12 },
@@ -24,14 +23,7 @@ const floorData = [
   { floor: "8", devices: 4 },
 ];
 
-// Total across all floors
 const totalDevices = floorData.reduce((sum, row) => sum + row.devices, 0);
-
-// Data for demo chart — not used anymore
-const vizData = [
-  ...floorData,
-  { floor: "Total", devices: totalDevices },
-];
 
 function App() {
   const [page, setPage] = useState("home");
@@ -39,35 +31,83 @@ function App() {
   const renderPage = () => {
     if (page === "home") {
       return (
-        <section className="section home-section">
-          <h1>Geisel Wi-Fi Occupancy Tracker</h1>
-          <p>
-            This project estimates how many devices are connected to Wi-Fi near
-            ESP32 sensors placed throughout Geisel Library. The long-term goal
-            is to give students a quick sense of which floors are crowded and
-            which are open.
-          </p>
-        </section>
+        <>
+          {/* First card */}
+          <section className="section home-section" style={{ marginBottom: "1.5rem" }}>
+            <h1>Geisel Occupancy Tracker</h1>
+            <p>
+              This project estimates how many people are present near ESP32
+              sensors placed throughout Geisel Library. The ESP32 boards scan
+              for nearby Bluetooth devices and use hashing to approximate unique
+              visitors, so students can quickly see which floors are crowded and
+              which are open.
+            </p>
+          </section>
+
+          {/* Second card with links and improved spacing */}
+          <section className="section" style={{ marginBottom: "1.5rem" }}>
+            <h1 style={{ marginBottom: "1rem" }}>Project Links</h1>
+            <p style={{ marginBottom: "0.75rem" }}>
+              Explore the live backend data and source code for this project:
+            </p>
+            <ul
+              style={{
+                listStyleType: "disc",
+                paddingLeft: "1.2rem",
+                marginBottom: "0.85rem",
+                lineHeight: "1.6",
+              }}
+            >
+              <li>
+                <a
+                  href="https://console.firebase.google.com/u/2/project/geiseloccupancytracker-4429e/overview?pli=1"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ color: "#FCD34D" }}
+                >
+                  Firebase Console — GeiselOccupancyTracker
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/DylanBerry1/DS3-Geisel-Library-Project"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ color: "#FCD34D" }}
+                >
+                  GitHub Repository — DS3 Geisel Library Project
+                </a>
+              </li>
+            </ul>
+          </section>
+        </>
       );
     }
 
     if (page === "about") {
       return (
         <section className="section">
-          <h1>About</h1>
-          <p>
+          <h1 style={{ marginBottom: "1rem" }}>About</h1>
+          <p style={{ marginBottom: "0.75rem" }}>
             ESP32 boards, programmed using the Arduino IDE, periodically scan
-            for nearby Wi-Fi devices. Each board records:
+            for nearby Bluetooth devices. For each scan, the code hashes device
+            identifiers so that individual devices are de-duplicated. Each
+            board estimates:
           </p>
-          <ul>
-            <li>How many devices were detected</li>
-            <li>Which floor the ESP32 is on</li>
+          <ul
+            style={{
+              marginLeft: "1.2rem",
+              marginBottom: "0.85rem",
+              lineHeight: "1.6",
+            }}
+          >
+            <li>How many unique Bluetooth devices were detected</li>
+            <li>Which floor the device is on</li>
             <li>The time of the scan</li>
           </ul>
-          <p>
+          <p style={{ marginTop: "0.25rem" }}>
             These readings are sent to Firebase and visualized on the website.
-            Live visualizations now appear on the{" "}
-            <strong>Visualization</strong> page.
+            Live visualizations now appear on the <strong>Visualization</strong> page.
           </p>
         </section>
       );
@@ -82,8 +122,6 @@ function App() {
             Library floor layout. As data comes in, floor occupancy fills from
             the center, reflecting actual usage.
           </p>
-
-          {/* Only visualization component shown here */}
           <div className="chart-container">
             <Visualization />
           </div>
@@ -137,7 +175,6 @@ function App() {
 
   return (
     <div className="app">
-      {/* Top navigation bar */}
       <nav className="navbar">
         <div className="navbar-title">Geisel Occupancy Tracker</div>
         <div className="navbar-links">
@@ -168,12 +205,10 @@ function App() {
         </div>
       </nav>
 
-      {/* Page content */}
       <main className="main">{renderPage()}</main>
 
-      {/* Footer */}
       <footer className="footer">
-        ESP32 Wi-Fi Occupancy • DS3 Geisel Library Project
+        ESP32 Bluetooth Occupancy • DS3 Geisel Library Project
       </footer>
     </div>
   );
