@@ -33,7 +33,10 @@ function App() {
       return (
         <>
           {/* First card */}
-          <section className="section home-section" style={{ marginBottom: "1.5rem" }}>
+          <section
+            className="section home-section"
+            style={{ marginBottom: "1.5rem" }}
+          >
             <h1>Geisel Occupancy Tracker</h1>
             <p>
               This project estimates how many people are present near ESP32
@@ -107,7 +110,8 @@ function App() {
           </ul>
           <p style={{ marginTop: "0.25rem" }}>
             These readings are sent to Firebase and visualized on the website.
-            Live visualizations now appear on the <strong>Visualization</strong> page.
+            Live visualizations now appear on the <strong>Visualization</strong>{" "}
+            page.
           </p>
         </section>
       );
@@ -125,47 +129,6 @@ function App() {
           <div className="chart-container">
             <Visualization />
           </div>
-        </section>
-      );
-    }
-
-    if (page === "input") {
-      return (
-        <section className="section">
-          <h1>Data Input (Demo)</h1>
-          <p>
-            In the final version of this project, readings will be sent
-            automatically by ESP32 boards. This page demonstrates what manual
-            input to Firebase might look like.
-          </p>
-          <form
-            className="input-form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              alert("Demo only: real input will use Firebase.");
-            }}
-          >
-            <label>
-              Floor:
-              <select name="floor" required>
-                <option value="">Select a floor</option>
-                <option value="1">1st Floor</option>
-                <option value="2">2nd Floor</option>
-                <option value="4">4th Floor</option>
-                <option value="5">5th Floor</option>
-                <option value="6">6th Floor</option>
-                <option value="7">7th Floor</option>
-                <option value="8">8th Floor</option>
-              </select>
-            </label>
-
-            <label>
-              Number of devices:
-              <input type="number" min="0" name="devices" required />
-            </label>
-
-            <button type="submit">Submit (Demo)</button>
-          </form>
         </section>
       );
     }
@@ -195,12 +158,6 @@ function App() {
             onClick={() => setPage("visualization")}
           >
             Visualization
-          </button>
-          <button
-            className={page === "input" ? "nav-link active" : "nav-link"}
-            onClick={() => setPage("input")}
-          >
-            Data Input
           </button>
         </div>
       </nav>
