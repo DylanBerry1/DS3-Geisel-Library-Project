@@ -29,7 +29,7 @@ function Visualization() {
   const [floorsSnapshot, setFloorsSnapshot] = useState(
     FLOOR_ORDER.map(() => null)
   );
-  const [timeline, setTimeline] = useState([]); // total devices over time
+  const [timeline, setTimeline] = useState([]); // total count over time
   const [floorTimelines, setFloorTimelines] = useState({}); // per-floor series
   const [hoverFloor, setHoverFloor] = useState(null); // which floor is hovered
 
@@ -136,7 +136,7 @@ function Visualization() {
     return () => unsub();
   }, []);
 
-  // Current total devices (for bottom text)
+  // Current total count (for bottom text)
   const totalCount = floorsSnapshot.reduce(
     (sum, f) => sum + (f ? f.count : 0),
     0
@@ -301,9 +301,9 @@ function Visualization() {
           })}
         </div>
 
-        {/* RIGHT: Devices Over Time */}
+        {/* RIGHT: Count Over Time */}
         <div className="timeline-box">
-          <h3>Devices Over Time</h3>
+          <h3>Count Over Time</h3>
           {chartDataLimited.length > 0 ? (
             <ResponsiveContainer width="100%" height={340}>
               <LineChart data={chartDataLimited}>
@@ -327,7 +327,7 @@ function Visualization() {
       </div>
 
       <p className="geisel-total">
-        Total devices currently detected in Geisel:{" "}
+        Total count of people currently in Geisel:{" "}
         <strong>{totalCount}</strong>
       </p>
     </div>
