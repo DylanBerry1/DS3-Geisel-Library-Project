@@ -81,6 +81,16 @@ function App() {
                   GitHub Repository — DS3 Geisel Library Project
                 </a>
               </li>
+              <li>
+                <a 
+                href="https://docs.google.com/document/d/1ywZ4F5e9E5dSa0FRFMFzSdlbqfnCTMOG8z7uQJSuUaQ/edit?tab=t.0"
+                target="_blank"
+                rel="noreferrer"
+                style={{ color: "#FCD34D" }}
+                >
+                  Documentation - DS3 Geisel Library Project
+                </a>
+              </li>
             </ul>
           </section>
         </>
