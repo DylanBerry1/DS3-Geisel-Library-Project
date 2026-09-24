@@ -198,3 +198,8 @@
 * **Future Improvements**  
   - Reduce Firebase writes by batching to overcome upload rate limitations if necessary  
   - Add RSSI thresholding to filter out weak device signals
+* **Team Assignments**
+  - Dylan: Project lead, Dashboard
+  - Yifei: Dashboard, Backend integration
+  - Dhruv: Firebase Backend
+  - Evan: Hardware logic (Arduino)
